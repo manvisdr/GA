@@ -108,7 +108,7 @@ int main()
         Rpc[i] = ranpc [i]/1000;
         num[i]=i;
         //num=1;
-        cout << " Rand.C" <<" [" << i << "] " << "= " << Rpc[i]<< " " ;
+        cout << "Rand.C" <<" [" << i << "] " << "= " << Rpc[i]<< " " ;
         cout << " -> Num.C" <<" [" << i << "] " << "= " << num[i]<< " " << endl;
     }
 
@@ -153,28 +153,31 @@ int main()
 
 	// Proses Crossover
 	// Menentukan induk
-	int Pc, buf, i_in1, i_in2, no_in1, no_in2, induk1[ny], induk2[ny], indukbaru[nx];
+	int Pc, buf, indukganjil, indukgenap, no_in1, no_in2, induk1[ny], induk2[ny], indukbaru[nx];
 
 	for(int i=1; i<=jp; i++)
     {
-    	i_in1=2*i-1;
-    	i_in2=2*i;
-    	no_in1=num[i_in1];
-    	no_in2=num[i_in2];
-    	cout << "\n in1 = " << i_in1 << "\t induk1 = " << no_in1;			//ceking induk yang dipilih
-		cout << "\n in2 = " << i_in2 << "\t induk2 = " << no_in2 <<endl;
+    	indukganjil=2*i-1;
+    	indukgenap=2*i;
+    	no_in1=num[indukganjil];
+    	no_in2=num[indukgenap];
+    	cout << "\n in1 = " << indukganjil << "\t induk 1 = " << no_in1;			//ceking induk yang dipilih
+		cout << "\n in2 = " << indukgenap << "\t induk 2 = " << no_in2 <<endl;
 
-		cout << " \n Induk1 =  " ;
+		//cout << " \n Induk1 =  " ;
+		cout << " \n Induk <"<<i<<"> =  " <<"[";
 		for (int j=1;j<=ny;j++){
 			induk1[j]=matrix[no_in1][j];
-			cout << induk1[j] << "\t";
+			cout << induk1[j] << ";";
 		}
-		cout << " \n Induk2 =  " ;
+		cout <<"]" <<endl;
+		//cout << " \n Induk2 =  " ;
+		cout << " Induk <"<<i<<"> =  " <<"[";
 		for (int j=1;j<=ny;j++){
 			induk2[j]=matrix[no_in2][j];
-			cout << induk2[j] << "\t";
+			cout << induk2[j] << ";";
 		}
-		cout << endl;
+		cout <<"]" <<endl;
 
 		//penentuan titik crossover
 		Pc =rand()%(ny-1)+1;
@@ -183,14 +186,19 @@ int main()
 		cout <<"--------------------------\n";
 		cout <<"hasil crossover = \n";
 		cout <<"Induk1 \t Induk2 \n";
+		//cout << "Chrom.Crossover [" << i << "] = [";
 
 		for (int j=1;j<=ny;j++){
+
 			if (j<=Pc){
 				buf	= induk1[j];
 				induk1[j]=induk2[j];
 				induk2[j]=buf;
+
 				cout << induk1[j] << "\t";
 				cout << induk2[j] << "\n";
+				cout << induk1[j] << " ";
+				cout << induk2[j] << " ";
 			}
 			else{
 				induk1[j]=induk1[j];
@@ -198,32 +206,20 @@ int main()
 				cout << induk1[j] << "\t";
 				cout << induk2[j] << "\n";
 			}
+			//cout << matrix[next[i]][induk1[j]] <<"  ";
+			//cout <<"]"<< endl;
 		}
-		cout << induk1[j]<< endl;
-        cout << induk2[j];
-		for(int i=1;i<=nx;i++)
-        {
-        cout << "Chrom.Crossover [" << i << "] = [";
-        for (int j=1;j<=ny;j++)
-        {
-            cout << matrix[i][induk1[j]] <<"  ";
-        }
-        cout <<"]"<< endl;
-        }
-
+    }
+    float pm=0.1;
+    int total_gen=0,jml_mutasi,randmut;
+    total_gen=nx*ny;
+    jml_mutasi=pm*total_gen;
+    cout<<"Total Gen = "<<total_gen<<" --> ";
+    cout<<" Jumlah.Mutasi = "<<jml_mutasi<<endl;
+    for(int i=1; i<=jml_mutasi; i++)
+    {
+        randmut=rand()%total_gen+1;
+        cout<<"Posisi Gen [" << i << "] = "<<randmut<<endl;
     }
 
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
