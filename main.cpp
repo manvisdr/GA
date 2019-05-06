@@ -132,6 +132,7 @@ int main()
         if(Rpc[i]<pc){					// jika random kurang dari probabilitas crossover
            	//cpc[i]=i;
            	jc++;
+           	cpc[jc]=i;
         }
         //else
         //cpc[i]=0;
@@ -153,7 +154,7 @@ int main()
 
 	// Proses Crossover
 	// Menentukan induk
-	int Pc, buf, indukganjil, indukgenap, no_in1, no_in2, induk1[ny], induk2[ny], indukbaru[nx];
+	int Pc, buf, indukganjil, indukgenap, no_in1, no_in2, induk1[ny], induk2[ny], indukbaru[nx],chrmocross[nx][ny];
 
 	for(int i=1; i<=jp; i++)
     {
@@ -186,7 +187,7 @@ int main()
 		cout <<"--------------------------\n";
 		cout <<"hasil crossover = \n";
 		cout <<"Induk1 \t Induk2 \n";
-		//cout << "Chrom.Crossover [" << i << "] = [";
+		cout << "Chrom.Crossover [" << i << "] = [";
 
 		for (int j=1;j<=ny;j++){
 
@@ -194,32 +195,43 @@ int main()
 				buf	= induk1[j];
 				induk1[j]=induk2[j];
 				induk2[j]=buf;
-
-				cout << induk1[j] << "\t";
-				cout << induk2[j] << "\n";
-				cout << induk1[j] << " ";
-				cout << induk2[j] << " ";
+				matrix[next[i]][j]=chrmocross[next[i]][induk1[j]];
+				cout << matrix[next[i]][j] <<"  ";
+//				cout << induk1[j] << "\t";
+//				cout << induk2[j] << "\n";
 			}
 			else{
 				induk1[j]=induk1[j];
 				induk2[j]=induk2[j];
-				cout << induk1[j] << "\t";
-				cout << induk2[j] << "\n";
+//				cout << induk1[j] << "\t";
+//				cout << induk2[j] << "\n";
+				matrix[next[i]][j]=chrmocross[next[i+1]][induk1[j]];
+				cout << matrix[next[i]][j] <<"  ";
 			}
 			//cout << matrix[next[i]][induk1[j]] <<"  ";
-			//cout <<"]"<< endl;
+			cout <<"]"<< endl;
 		}
     }
-    float pm=0.1;
-    int total_gen=0,jml_mutasi,randmut;
-    total_gen=nx*ny;
-    jml_mutasi=pm*total_gen;
-    cout<<"Total Gen = "<<total_gen<<" --> ";
-    cout<<" Jumlah.Mutasi = "<<jml_mutasi<<endl;
-    for(int i=1; i<=jml_mutasi; i++)
-    {
-        randmut=rand()%total_gen+1;
-        cout<<"Posisi Gen [" << i << "] = "<<randmut<<endl;
-    }
+
+        float pm=0.1;
+        int total_gen=0,jml_mutasi,gen_baru,indexm=0;
+        int subchrnum[total_gen],mutatechr[indexm][2];
+        double randmut;
+        total_gen=nx*ny;
+        jml_mutasi=pm*total_gen;
+        cout<<"Total Gen = "<<total_gen<<" --> ";
+        cout<<" Jumlah.Mutasi = "<<jml_mutasi<<endl;
+        for(int i=1; i<=jml_mutasi; i++)
+        {
+            randmut=rand()%total_gen+1;
+            gen_baru=rand()%total_gen+1;
+            cout<<"Posisi Gen [" << i << "] = "<<randmut<<endl;
+            if(randmut<pm){
+            subchrnum[indexm] = i;
+            indexm++;
+            }
+        }
+
+
 
 }
